@@ -1,0 +1,23 @@
+<platform-advance-datatable-with-filter
+  class="w-[98%]"
+  *transloco="let t"
+  [logicExecutorService]="staffService"
+  (onSelectData)="onSelectData($event)"
+  (onDeSelectData)="deSelectData($event)"
+  (onSidebarAction)="sideBarAction($event)"
+  [dataTableOptions]="datatableConfigOptions()">
+</platform-advance-datatable-with-filter>
+
+<div
+  *transloco="let t"
+  class="bg-white flex justify-end gap-8 w-full fixed bottom-0 left-0 px-13 py-7 z-50">
+  <platform-button variant="default" (click)="cancelRoleAssign()">
+    {{ t('Cancel') }}
+  </platform-button>
+  <platform-button
+    [disabled]="isSaving"
+    [isLoading]="isSaving"
+    (click)="confirmRoleAssign()">
+    {{ t('Role.Assign') }}
+  </platform-button>
+</div>

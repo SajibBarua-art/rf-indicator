@@ -1,0 +1,56 @@
+<div class="min-h-screen w-full bg-[#fafbfc] flex flex-col" *transloco="let t">
+  <div class="flex items-center justify-between px-8 pt-4 pb-2">
+    <button
+      aria-label="Back"
+      class="border border-gray-200 rounded-lg w-8 h-8 flex items-center justify-center text-xl cursor-pointer mr-4"
+      (click)="onCancel()">
+      <mat-icon
+        [svgIcon]="'feather:chevron-left'"
+        class="text-current"></mat-icon>
+    </button>
+    <h1 class="flex-1 text-left text-xl font-bold text-[#222] m-0">
+      {{ 'Timeline Management Setup' }}
+    </h1>
+    <button
+      class="bg-[#FEF5FA] text-[#B60B65] px-4 py-2 font-semibold rounded-md flex items-center gap-3"
+      (onClick)="refreshPage()">
+      {{ t('global.reset') }}
+      <span><img src="assets/icons/arrow-path.svg" /></span>
+    </button>
+  </div>
+  <div
+    class="flex-1 flex flex-col items-center justify-start pt-8 w-[90%] mx-auto">
+    <div class="w-full rounded-xl px-0 pt-0 pb-0 mb-18">
+      <app-timeline-management-create></app-timeline-management-create>
+    </div>
+  </div>
+  <footer
+    class="bg-white flex items-center justify-between fixed bottom-0 right-0 px-13 py-7 border-t"
+    appSidebarOffsetWidth
+    *transloco="let t">
+    <div class="flex items-center gap-2"></div>
+    <div class="flex gap-8">
+      <platform-button
+        variant="default"
+        [disabled]="isLoading"
+        iconPrefix="platform_solid:close"
+        (onClick)="onCancel()">
+        Cancel
+      </platform-button>
+      <platform-feature-guard
+        platformTableAction
+        [activatesWith]="[
+          { Key: TIMELINE_SETUP_FEATURES.Create },
+          { Key: TIMELINE_SETUP_FEATURES.Edit },
+        ]">
+        <platform-button
+          type="submit"
+          [disabled]="isLoading"
+          iconPrefix="heroicons_outline:check"
+          (onClick)="onSubmit()">
+          Save
+        </platform-button>
+      </platform-feature-guard>
+    </div>
+  </footer>
+</div>

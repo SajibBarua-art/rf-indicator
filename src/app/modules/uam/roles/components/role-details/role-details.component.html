@@ -1,0 +1,72 @@
+@if (role) {
+  <div class="py-[24px]" *transloco="let t">
+    <!-- Using grid for layout -->
+    <div
+      class="grid grid-cols-1 w-full sm:grid-cols-2 mt-8 gap-1.5"
+      [ngClass]="{
+        'lg:grid-cols-4': !isQuickView,
+      }">
+      <app-profile-field-card class="flex flex-grow">
+        <div userCardTitle>{{ t('RoleCreate.RoleID') }}</div>
+        <div userCardBody>
+          {{ role.RoleUniqName }}
+        </div>
+      </app-profile-field-card>
+      <app-profile-field-card class="flex flex-grow">
+        <div userCardTitle>{{ t('RoleCreate.RoleName') }}</div>
+        <div userCardBody>
+          {{ role.RoleDisplayName }}
+        </div>
+      </app-profile-field-card>
+      <app-profile-field-card class="flex flex-grow">
+        <div userCardTitle>{{ t('Date Created') }}</div>
+        <div userCardBody>
+          {{ role.CreatedDate | date: 'dd MMM,yyyy' }}
+        </div>
+      </app-profile-field-card>
+      <app-profile-field-card class="flex flex-grow">
+        <div userCardTitle>{{ t('RoleCreate.Description') }}</div>
+        <div
+          userCardBody
+          class="grid grid-flow-col gap-2 items-center w-full truncate">
+          <div class="grid-cols-4 truncate">
+            {{ role.Description }}
+          </div>
+        </div>
+      </app-profile-field-card>
+    </div>
+    <!-- Permissions  -->
+    @if (showPermissions) {
+      <div class="p-4">
+        <div class="font-bold text-xl text-gray-800 my-6">
+          {{ t('Role.Permissions') }}
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          @for (keyFeature of Object.keys(groupedFeatures); track keyFeature) {
+            <div>
+              <mat-accordion>
+                <mat-expansion-panel [expanded]="true">
+                  <mat-expansion-panel-header class="bg-zinc-100 m-4">
+                    <div>
+                      {{ keyFeature }}
+                    </div>
+                  </mat-expansion-panel-header>
+                  <div class="flex flex-col">
+                    @for (
+                      feature of groupedFeatures[keyFeature];
+                      track feature
+                    ) {
+                      <div class="py-1">
+                        {{ feature.Name }}
+                      </div>
+                    }
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

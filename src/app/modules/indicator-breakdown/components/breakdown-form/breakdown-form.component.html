@@ -1,0 +1,128 @@
+<form [formGroup]="breakdownform">
+  <div formArrayName="layers">
+    <div
+      class="border border-gray-300 rounded-lg flex flex-col justify-between mt-6 p-7"
+      *ngFor="let layer of layers.controls; let layerIndex = index"
+      [formGroupName]="layerIndex">
+      <div class="flex justify-between items-center">
+        <p class="font-bold">Layer {{ layerIndex + 1 }}</p>
+        <button
+          type="button"
+          class="bg-white rounded-lg"
+          mat-icon-button
+          (click)="toggleLayer(layerIndex)">
+          <mat-icon>
+            {{
+              isLayerExpanded[layerIndex]
+                ? 'keyboard_arrow_up'
+                : 'keyboard_arrow_down'
+            }}
+          </mat-icon>
+        </button>
+      </div>
+      <div *ngIf="isLayerExpanded[layerIndex]">
+        <div formArrayName="breakdowns">
+          <div
+            *ngFor="
+              let breakdown of getBreakdowns(layerIndex).controls;
+              let breakdownIndex = index
+            "
+            [formGroupName]="breakdownIndex"
+            class="flex flex-col gap-4 border p-4 rounded-md mb-4">
+            <div class="grid md:grid-cols-9 grid-cols-1 gap-8 mt-3">
+              <mat-form-field class="w-full col-span-4" floatLabel="always">
+                <mat-label>Indicator Number</mat-label>
+                <input
+                  matInput
+                  readonly
+                  formControlName="IndicatorNumber"
+                  type="text"
+                  placeholder="Enter layer name" />
+                <mat-error
+                  *ngIf="
+                    breakdown.get('IndicatorNumber')?.hasError('required')
+                  ">
+                  This field is required.
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="w-full col-span-4" floatLabel="always">
+                <mat-label>Indicator Statement</mat-label>
+                <input
+                  matInput
+                  formControlName="IndicatorStatement"
+                  type="text"
+                  placeholder="Enter Indicator Statement" />
+                <mat-error
+                  *ngIf="
+                    breakdown.get('IndicatorStatement')?.hasError('required')
+                  ">
+                  This field is required.
+                </mat-error>
+              </mat-form-field>
+
+              <div
+                class="col-span-1 flex flex-row items-center justify-center gap-7">
+                <button
+                  *ngIf="
+                    breakdownIndex > 0 && getBreakdowns(layerIndex).length > 1
+                  "
+                  type="button"
+                  (click)="removeLabel(layerIndex, breakdownIndex)">
+                  <img src="assets/images/logo/minus.svg" />
+                </button>
+
+                <button
+                  *ngIf="
+                    getBreakdowns(layerIndex).length - 1 === breakdownIndex
+                  "
+                  type="button"
+                  (click)="addLabel(layerIndex)">
+                  <img src="assets/images/logo/plus.svg" />
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <mat-label>Source <span class="text-red-500">*</span></mat-label>
+              <mat-radio-group
+                formControlName="SourceType"
+                class="flex flex-row gap-4"
+                color="primary">
+                <mat-radio-button
+                  *ngFor="let source of SourceType"
+                  [value]="source.value">
+                  {{ source.label }}
+                </mat-radio-button>
+              </mat-radio-group>
+              <mat-error
+                class="text-xs font-semibold"
+                *ngIf="breakdown.get('SourceType')?.hasError('required')">
+                This field is required.
+              </mat-error>
+            </div>
+
+            <div *ngIf="breakdown.get('SourceType')?.value === 1">
+              <mat-form-field class="md:w-[43%] w-full" floatLabel="always">
+                <mat-label>System</mat-label>
+                <mat-select
+                  formControlName="System"
+                  placeholder="Select system">
+                  <mat-option
+                    *ngFor="let system of System"
+                    [value]="system?.value">
+                    {{ system.label }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="breakdown.get('System')?.hasError('required')">
+                  This field is required.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,65 @@
+// Import the mat-core-styles function to get access to the density mixins
+@use '@angular/material' as mat;
+
+// Define a custom class to scope the density changes
+.dense-form-fields {
+  // Apply a denser style to all mat-form-field components within this class.
+  // The density scale goes from 0 (default) to -4 (most dense).
+  // -2 is a good starting point for a noticeably smaller field.
+  @include mat.form-field-density(-10);
+  @include mat.input-density(-10); // Also apply to the input itself
+
+  // Additional compact styling for table cells
+  td {
+    padding: 0.25rem !important;
+
+    .mat-mdc-form-field {
+      width: 100%;
+      min-width: 65px;
+      max-width: 105px;
+
+      .mat-mdc-form-field-wrapper {
+        padding-bottom: 0;
+      }
+
+      .mat-mdc-text-field-wrapper {
+        padding: 0 8px;
+        height: 36px;
+      }
+
+      .mat-mdc-form-field-infix {
+        padding: 8px 0;
+        min-height: auto;
+      }
+
+      input.mat-mdc-input-element {
+        font-size: 12px;
+        padding: 4px 0;
+      }
+    }
+  }
+
+  // Make table more compact
+  table {
+    font-size: 12px;
+
+    th {
+      padding: 0.5rem 0.25rem;
+      font-size: 11px;
+    }
+
+    td {
+      padding: 0.25rem;
+    }
+  }
+}
+
+// Styles for disabled options in select dropdowns
+::ng-deep .mat-option.mat-option-disabled {
+  color: #9ca3af !important; // gray-400
+  cursor: not-allowed;
+}
+
+::ng-deep .mat-option.mat-option-disabled:hover {
+  background-color: transparent !important;
+}

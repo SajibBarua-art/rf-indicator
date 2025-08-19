@@ -1,0 +1,23 @@
+<div class="profile-container py-[24px] flex-auto" *transloco="let t">
+  <platform-card>
+    <div class="max-w-20xl px-4 flex-grow">
+      <app-details-header
+        [navigations]="navigations()"
+        (backClicked)="handleBack()">
+        <div ngProjectAs="details-header-actions" class="flex gap-2">
+          @if (isFullDetails()) {
+            <platform-feature-guard
+              [activatesWith]="[{ Key: USER_FEATURES.Suspend }]">
+              <platform-button (onClick)="showSuspendDialog()">
+                {{ user()?.UserStatusId === 0 ? t('Suspend') : t('Unsuspend') }}
+              </platform-button>
+            </platform-feature-guard>
+          }
+        </div>
+      </app-details-header>
+
+      <!-- Profile Routes -->
+      <router-outlet />
+    </div>
+  </platform-card>
+</div>

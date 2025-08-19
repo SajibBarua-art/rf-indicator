@@ -1,0 +1,42 @@
+@if (isTableVisible) {
+  <div *transloco="let t" class="w-full">
+    <platform-advance-datatable-with-filter
+      (onSidebarAction)="sideBarAction($event)"
+      [dataTableOptions]="datatableConfig()"
+      [changeTableCurrentPage]="initialPage$"
+      [filterMode]="'inline'"
+      (listCurrentPage)="currentPageNumber = $event + 1">
+      <div platformTableHeader class="w-full text-2xl font-bold">
+        {{ t('rf-indicator.ListTableHeader') }}
+      </div>
+      <!-- <platform-button
+        platformTableAction
+        variant="default"
+        buttonClass="bg-stone-950 hover:bg-stone-900 text-white"
+        iconClass="text-white"
+        iconPrefix="platform_solid:reload"
+        (onClick)="refreshTable()">
+        Refresh
+      </platform-button> -->
+
+      <platform-button
+        platformTableAction
+        variant="default"
+        iconPrefix="platform_solid:reload"
+        (onClick)="refreshTable()">
+        Refresh
+      </platform-button>
+
+      <platform-feature-guard
+        platformTableAction
+        [activatesWith]="[{ Key: RF_INDICATOR_FEATURES.Create }]">
+        <platform-button
+          platformTableAction
+          iconPrefix="platform_solid:create"
+          (onClick)="createNewEntry()">
+          Create New
+        </platform-button>
+      </platform-feature-guard>
+    </platform-advance-datatable-with-filter>
+  </div>
+}

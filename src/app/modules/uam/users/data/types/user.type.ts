@@ -1,0 +1,28 @@
+export type User = {
+  _id: string;
+  Id: string;
+  UserId: string;
+  CreatedDate: string;
+  UserName: string;
+  FirstName: string;
+  LastName: string;
+  PinNumber: string;
+  UserStatusId: number;
+  UserStatusText: string;
+  Email: null;
+  EmailVerified: boolean;
+  PhoneNumber: string;
+  PhoneNumberVerified: boolean;
+  BkashNumber: string;
+  DateOfBirth: null;
+  ProfileImageId: null;
+  Age: number;
+  DemarcationName: string;
+  DemarcationId: string;
+  Designation: string;
+  Sex: string;
+  Religion: string;
+  JoiningDate: string;
+  Roles: string[];
+  JobLevel: string;
+};

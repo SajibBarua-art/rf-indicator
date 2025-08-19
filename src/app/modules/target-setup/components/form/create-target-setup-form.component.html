@@ -1,0 +1,155 @@
+<form [formGroup]="TargetSetupForm" class="p-4 space-y-6 mb-10">
+  <div
+    class="flex-1 flex flex-col items-center justify-start pt-8 w-[70%] mx-auto">
+    <div class="w-full bg-white rounded-xl px-0 pt-0 pb-0 mb-2">
+      <!-- Indicator Statement/Title -->
+      <mat-form-field class="w-full" floatLabel="always">
+        <mat-label>Indicator Statement/Title</mat-label>
+        <mat-select formControlName="indicatorStatement" placeholder="Select">
+          <mat-option
+            *ngFor="let statement of indicatorStatement"
+            [value]="statement.value">
+            {{ statement.label }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            TargetSetupForm.get('indicatorStatement')?.hasError('required')
+          ">
+          Indicator Statement is required.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Row 2: Year, Time Period Frequence and Time Period -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Year -->
+        <mat-form-field floatLabel="always">
+          <mat-label>Year</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [min]="minDate"
+            formControlName="year"
+            placeholder="Select Year"
+            readonly />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker
+            #picker
+            startView="multi-year"
+            (yearSelected)="chosenYearHandler($event, picker)">
+          </mat-datepicker>
+          <mat-error *ngIf="TargetSetupForm.get('year')?.hasError('required')">
+            Year is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Time Period Frequency -->
+        <mat-form-field floatLabel="always">
+          <mat-label>Time Period Frequency</mat-label>
+          <mat-select
+            formControlName="timePeriodFrequency"
+            placeholder="Select">
+            <mat-option
+              *ngFor="let freq of availableTimePeriodFrequencies"
+              [value]="freq.value">
+              {{ freq.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              TargetSetupForm.get('timePeriodFrequency')?.hasError('required')
+            ">
+            Frequency is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Time Period (Dependent) -->
+        <mat-form-field floatLabel="always">
+          <mat-label>Time Period</mat-label>
+          <mat-select formControlName="timePeriod" placeholder="Select">
+            <mat-option
+              *ngFor="let period of availableTimePeriods"
+              [value]="period.value">
+              {{ period.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="TargetSetupForm.get('timePeriod')?.hasError('required')">
+            Time Period is required.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <!-- The container makes the table scroll horizontally on small screens -->
+  <div class="dense-form-fields">
+    <div class="overflow-x-auto border border-gray-200 rounded-lg">
+      <table class="w-full text-sm text-left min-h-[165px]">
+        <thead class="bg-slate-50 text-gray-700 text-xs">
+          <tr>
+            <th colspan="2" class="px-4 py-3 border-b border-r text-center">
+              Target Unit
+            </th>
+            <th colspan="6" class="px-4 py-3 border-b border-r text-center">
+              Disaggregation Wise Achieved
+            </th>
+            <th rowspan="2" class="px-4 py-3 border-b border-r">Source</th>
+            <th rowspan="2" class="px-4 py-3 border-b">
+              Calculation Methodology
+            </th>
+          </tr>
+          <tr>
+            <ng-container
+              *ngFor="
+                let header of [
+                  'No.',
+                  '%',
+                  'Boys/Men',
+                  'Girls/Women',
+                  'Transgender',
+                  'PWD Boys/Men',
+                  'PWD Girls/Women',
+                  'PWD Transgender',
+                ]
+              ">
+              <th class="px-4 py-3 border-r">{{ header }}</th>
+            </ng-container>
+          </tr>
+        </thead>
+        <tbody [formGroupName]="'targetDetails'">
+          <tr>
+            <!-- Field definitions -->
+            <ng-container *ngFor="let field of fieldConfigs">
+              <td class="border-r">
+                <mat-form-field appearance="outline" class="w-full">
+                  <input
+                    matInput
+                    [formControlName]="field.name"
+                    placeholder="Input" />
+                  <mat-error
+                    *ngIf="targetDetails.get(field.name)?.hasError('required')"
+                    class="text-xss">
+                    {{ field.label }} is required.
+                  </mat-error>
+                  <mat-error
+                    *ngIf="targetDetails.get(field.name)?.hasError('pattern')"
+                    class="text-xss">
+                    Please enter only numbers.
+                  </mat-error>
+                  <mat-error
+                    *ngIf="targetDetails.get(field.name)?.hasError('max')"
+                    class="text-xss">
+                    Value cannot be more than 100.
+                  </mat-error>
+                </mat-form-field>
+              </td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>

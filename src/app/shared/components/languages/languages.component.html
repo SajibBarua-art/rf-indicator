@@ -1,0 +1,24 @@
+<mat-button-toggle-group
+  class="hidden sm:inline-flex border-none"
+  value="{{ activeLang }}"
+  (change)="setActiveLang($event)"
+  #languageSelector="matButtonToggleGroup">
+  <mat-button-toggle
+    [ngClass]="{
+      'bg-primary text-white': activeLang === flagCodes.en,
+      'bg-primary-50 text-primary': activeLang !== flagCodes.en,
+    }"
+    class="px-1.5 rounded-sm overflow-hidden border-none font-medium"
+    value="{{ flagCodes.en }}"
+    >English
+  </mat-button-toggle>
+  <mat-button-toggle
+    [ngClass]="{
+      'bg-primary text-white': activeLang === flagCodes.bd,
+      'bg-primary-50 text-primary': activeLang !== flagCodes.bd,
+    }"
+    class="px-1.5 rounded-sm overflow-hidden border-none font-medium"
+    value="{{ flagCodes.bd }}"
+    >Bangla
+  </mat-button-toggle>
+</mat-button-toggle-group>

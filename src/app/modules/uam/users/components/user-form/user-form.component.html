@@ -1,0 +1,121 @@
+<div class="w-full p-8">
+  <div class="flex justify-between mx-auto">
+    <div>
+      <h1 class="font-bold text-lg">
+        {{ userForm.get('UserId').value ? 'Update' : 'Create' }} User
+      </h1>
+      <p class="text-sm">User Management | User List | Create User</p>
+    </div>
+  </div>
+  <app-card class="h-auto">
+    <div class="justify-self-auto p-6 h-auto mt-6">
+      <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+        <div class="p-4 mx-auto w-full mt-4 flex flex-row space-x-4">
+          <!-- First Name and Last Name -->
+          <mat-form-field class="w-full" floatLabel="always">
+            <mat-label>First Name:</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="FirstName"
+              placeholder="Enter first name" />
+            @if (
+              userForm.get('FirstName')?.invalid &&
+              userForm.get('FirstName')?.touched
+            ) {
+              <mat-error> First Name is required </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="w-full" floatLabel="always">
+            <mat-label>Last Name:</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="LastName"
+              placeholder="Enter last name" />
+            @if (
+              userForm.get('LastName')?.invalid &&
+              userForm.get('LastName')?.touched
+            ) {
+              <mat-error> Last Name is required </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="p-4 mx-auto w-full mt-4 flex flex-row space-x-4">
+          <!-- UserName and Email -->
+          <mat-form-field class="w-full" floatLabel="always">
+            <mat-label>Username:</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="UserName"
+              placeholder="Enter UserName" />
+            @if (userForm.get('UserName')?.hasError('UserName')) {
+              <mat-error> UserName already exists </mat-error>
+            }
+            @if (
+              userForm.get('UserName')?.invalid &&
+              userForm.get('UserName')?.touched
+            ) {
+              <mat-error> Please enter a valid UserName </mat-error>
+            }
+          </mat-form-field>
+
+          <!-- Email and Phone -->
+          <mat-form-field class="w-full" floatLabel="always">
+            <mat-label>Email:</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="Email"
+              placeholder="Enter email" />
+            @if (userForm.get('Email')?.hasError('Email')) {
+              <mat-error> Email already exists </mat-error>
+            }
+            @if (
+              userForm.get('Email')?.invalid && userForm.get('Email')?.touched
+            ) {
+              <mat-error> Please enter a valid email </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="p-4 mx-auto w-full mt-4 flex flex-row space-x-4">
+          <!-- UserName and Email -->
+          <mat-form-field class="w-full" floatLabel="always">
+            <mat-label>Phone:</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="PhoneNumber"
+              placeholder="Enter phone number" />
+            @if (
+              userForm.get('PhoneNumber')?.invalid &&
+              userForm.get('PhoneNumber')?.touched
+            ) {
+              <mat-error> Phone number is required </mat-error>
+            }
+          </mat-form-field>
+
+          <!-- Email and Phone -->
+          <div class="w-full flex flex-col">
+            <mat-label class="mb-2">Status:</mat-label>
+            <div class="flex items-center">
+              <span class="mr-2">Inactive</span>
+              <mat-slide-toggle
+                formControlName="Active"
+                color="primary"></mat-slide-toggle>
+              <span class="ml-2">Active</span>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="flex justify-end gap-4 mb-4 mx-auto">
+        <platform-button variant="secondary">Cancel</platform-button>
+        <platform-button (onClick)="submitForm()" [disabled]="userForm.invalid">
+          {{ userForm.get('UserId').value ? 'Update' : 'Create' }}
+        </platform-button>
+      </div>
+    </div>
+  </app-card>
+</div>

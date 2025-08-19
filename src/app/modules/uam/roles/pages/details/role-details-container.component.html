@@ -1,0 +1,40 @@
+<div class="profile-container flex-auto mb-[90px]" *transloco="let t">
+  <platform-card class="w-full flex flex-col">
+    <div class="max-w-20xl mx-auto px-4 h-full">
+      @if (isShowNavMenu) {
+        <app-details-header [navigations]="navigations">
+          @if (isShowActionButtons) {
+            <div ngProjectAs="details-header-actions" class="flex gap-3">
+              <platform-feature-guard
+                [activatesWith]="[{ Key: ROLE_FEATURES.Assign }]">
+                <platform-button
+                  variant="secondary"
+                  (onClick)="roleService.navigateToAssignPage(role.Id)"
+                  >{{ t('Role.RoleAssign') }}</platform-button
+                >
+              </platform-feature-guard>
+              <platform-feature-guard
+                [activatesWith]="[{ Key: ROLE_FEATURES.Edit }]">
+                <platform-button
+                  (onClick)="roleService.navigateToEditPage(role.Id)"
+                  >{{ t('global.Edit') }}</platform-button
+                >
+              </platform-feature-guard>
+            </div>
+          }
+        </app-details-header>
+      }
+      @if (!isShowNavMenu) {
+        <div class="px-8 py-5 border border-gray-200">
+          <span>{{ t('Please Select Users to Assign the Role') }}</span>
+          <span class="uppercase font-bold text-gray-800 ml-1.5">{{
+            role.RoleUniqName
+          }}</span>
+        </div>
+      }
+
+      <!-- Profile Routes-->
+      <router-outlet></router-outlet>
+    </div>
+  </platform-card>
+</div>

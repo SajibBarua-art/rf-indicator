@@ -1,0 +1,28 @@
+@if (isTableVisible) {
+  <div *transloco="let t" class="w-full">
+    <platform-advance-datatable-with-filter
+      (onSidebarAction)="sideBarAction($event)"
+      [dataTableOptions]="datatableConfig()"
+      [changeTableCurrentPage]="initialPage$"
+      [filterMode]="'inline'"
+      (listCurrentPage)="currentPageNumber = $event + 1">
+      <div platformTableHeader class="w-full text-2xl font-bold">
+        {{ t('target-setup.ListTableHeader') }}
+      </div>
+      <platform-button
+        platformTableAction
+        variant="default"
+        buttonClass="text-gray-600"
+        iconPrefix="platform_solid:reload"
+        (onClick)="refreshTable()">
+        Refresh
+      </platform-button>
+      <platform-button
+        platformTableAction
+        iconPrefix="platform_solid:create"
+        (onClick)="createNewEntry()">
+        Create New
+      </platform-button>
+    </platform-advance-datatable-with-filter>
+  </div>
+}

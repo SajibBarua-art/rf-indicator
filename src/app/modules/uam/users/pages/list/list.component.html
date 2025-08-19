@@ -1,0 +1,28 @@
+<div class="w-full p-8">
+  <div class="flex flex-col w-full p-4">
+    <platform-advance-datatable-with-filter
+      [dataTableOptions]="datatableConfig()"
+      [changeTableCurrentPage]="initialPage$"
+      (onSidebarAction)="handleSideBarAction($event)"
+      (listCurrentPage)="currentPageNumber.set($event + 1)">
+    </platform-advance-datatable-with-filter>
+  </div>
+</div>
+<ng-container #quickViewContainer></ng-container>
+
+<ng-template #contentUserDetailsProfile>
+  <app-user-profile [data]="userSelected()" [isQuickView]="true">
+  </app-user-profile>
+</ng-template>
+
+<ng-template #contentActions>
+  <platform-button
+    class="w-full"
+    buttonClass="w-full justify-center"
+    [disabled]="!userSelected()"
+    (onClick)="navigateToDetails()">
+    {{ 'global.SeeFullView' | transloco }}
+  </platform-button>
+</ng-template>
+
+<router-outlet />

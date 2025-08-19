@@ -1,0 +1,30 @@
+<!-- Button -->
+<button class="flex items-center gap-2" [matMenuTriggerFor]="userActions">
+  <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+  <span class="text-accent-900">{{ user.FirstName || user.Email }}</span>
+  <mat-icon [svgIcon]="'mat_outline:arrow_drop_down'"></mat-icon>
+</button>
+
+<mat-menu #userActions="matMenu" [xPosition]="'before'">
+  <ng-container *transloco="let t">
+    <button mat-menu-item>
+      <span class="flex flex-col leading-none">
+        <span>{{ t('Signed in as') }}</span>
+        <span class="mt-1.5 text-md font-medium">{{
+          user.DisplayName || user.Email
+        }}</span>
+      </span>
+    </button>
+    <mat-divider class="my-2"></mat-divider>
+    <button mat-menu-item (click)="gotoProfile()">
+      <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+      <span>{{ t('Profile') }}</span>
+    </button>
+    <mat-divider class="my-2"></mat-divider>
+    <button (click)="signOut()" mat-menu-item>
+      <mat-icon
+        [svgIcon]="'heroicons_outline:arrow-right-on-rectangle'"></mat-icon>
+      <span>{{ t('Sign out') }}</span>
+    </button>
+  </ng-container>
+</mat-menu>

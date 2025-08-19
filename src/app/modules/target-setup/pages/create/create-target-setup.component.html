@@ -1,0 +1,55 @@
+<div class="min-h-screen w-full bg-[#fafbfc] flex flex-col" *transloco="let t">
+  <div class="flex items-center justify-between px-8 pt-4 pb-2">
+    <button
+      aria-label="Back"
+      class="border border-gray-200 rounded-lg w-8 h-8 flex items-center justify-center text-xl cursor-pointer mr-4"
+      (click)="onCancel()">
+      <mat-icon
+        [svgIcon]="'feather:chevron-left'"
+        class="text-current"></mat-icon>
+    </button>
+    <h1 class="flex-1 text-left text-xl font-bold text-[#222] m-0">
+      {{
+        isEdit()
+          ? t('target-setup.EditFormHeader')
+          : t('target-setup.CreateFormHeader')
+      }}
+    </h1>
+    <platform-button
+      variant="default"
+      buttonClass="text-gray-600 border border-[#6F7277]"
+      iconPrefix="platform_solid:reload"
+      (onClick)="refreshPage()">
+      {{ t('global.reset') }}
+    </platform-button>
+  </div>
+
+  <app-create-target-setup-form
+    [TargetSetupForm]="TargetSetupForm"
+    [availableTimePeriods]="
+      availableTimePeriods()
+    "></app-create-target-setup-form>
+
+  <footer
+    class="bg-white flex items-center justify-between fixed bottom-0 right-0 px-13 py-7 border-t"
+    appSidebarOffsetWidth
+    *transloco="let t">
+    <div class="flex items-center gap-2"></div>
+    <div class="flex gap-8">
+      <platform-button
+        variant="default"
+        iconPrefix="platform_solid:close"
+        (onClick)="onCancel()"
+        [disabled]="isLoading()">
+        Cancel
+      </platform-button>
+      <platform-button
+        type="submit"
+        (onClick)="submitForm()"
+        iconPrefix="heroicons_outline:check"
+        [disabled]="isLoading()">
+        Save
+      </platform-button>
+    </div>
+  </footer>
+</div>

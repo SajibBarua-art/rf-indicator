@@ -1,0 +1,47 @@
+<div class="w-full bg-gray-100">
+  <div class="flex flex-col w-full p-4" *transloco="let t">
+    <platform-advance-datatable-with-filter
+      [changeTableCurrentPage]="initialPage$"
+      (onSidebarAction)="sideBarAction($event)"
+      [dataTableOptions]="datatableConfigOptions()">
+      <platform-feature-guard
+        [activatesWith]="[{ Key: ROLE_FEATURES.Create }]"
+        platformTableAction>
+        <platform-button
+          iconPrefix="platform_solid:create"
+          (onClick)="gotoCreate()">
+          {{ t('RoleCreate.RoleCreate') }}
+        </platform-button>
+      </platform-feature-guard>
+    </platform-advance-datatable-with-filter>
+  </div>
+</div>
+<ng-container #quickViewContainer></ng-container>
+
+<ng-template #contentRoleDetailsProfile>
+  <app-role-details
+    [role]="roleSelected"
+    [showPermissions]="false"
+    [isQuickView]="true"></app-role-details>
+</ng-template>
+<ng-template #contentActions>
+  <platform-feature-guard
+    class="w-1/2"
+    [activatesWith]="[{ Key: ROLE_FEATURES.Edit }]">
+    <platform-button
+      variant="default"
+      class="w-full"
+      buttonClass="w-full justify-center"
+      *transloco="let t"
+      (onClick)="roleService.navigateToEditPage(roleSelected.Id)">
+      {{ t('global.Edit') }}
+    </platform-button>
+  </platform-feature-guard>
+  <platform-button
+    class="w-1/2"
+    buttonClass="w-full justify-center"
+    *transloco="let t"
+    (onClick)="roleService.navigateToDetailsPage(roleSelected.Id)">
+    {{ t('global.SeeFullView') }}
+  </platform-button>
+</ng-template>

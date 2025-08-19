@@ -1,0 +1,43 @@
+<div
+  class="flex justify-center items-center w-20 p-2 rounded-lg"
+  [ngClass]="{
+    'bg-blue-200': status === 'Active' || status === 'Draft',
+    'bg-green-200':
+      status === 'Approved' || status === 'Sent' || status === 'Saved',
+    'bg-red-200': status === 'Rejected',
+    'bg-yellow-100':
+      status === 'Schedule' || status === 'Vacation' || status === 'Pending',
+    'bg-gray-200':
+      status !== 'Active' &&
+      status !== 'Rejected' &&
+      status !== 'Approved' &&
+      status !== 'Draft' &&
+      status !== 'Schedule' &&
+      status !== 'Sent' &&
+      status !== 'Saved' &&
+      status !== 'Vacation' &&
+      status !== 'Pending',
+  }">
+  <span
+    class=""
+    [ngClass]="{
+      'text-blue-600': status === 'Active' || status === 'Draft',
+      'text-green-600':
+        status === 'Approved' || status === 'Sent' || status === 'Saved',
+      'text-red-600': status === 'Rejected',
+      'text-yellow-600':
+        status === 'Schedule' || status === 'Vacation' || status === 'Pending',
+      'text-black':
+        status !== 'Active' &&
+        status !== 'Rejected' &&
+        status !== 'Approved' &&
+        status !== 'Draft' &&
+        status !== 'Schedule' &&
+        status !== 'Sent' &&
+        status !== 'Saved' &&
+        status !== 'Vacation' &&
+        status !== 'Pending',
+    }">
+    {{ status }}
+  </span>
+</div>

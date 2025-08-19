@@ -1,0 +1,26 @@
+<div class="flex flex-col h-full">
+  <!-- Header -->
+  <header
+    class="sticky top-0 bg-white flex-col justify-between items-center md:w-auto md:h-auto">
+    <div class="flex flex-row justify-between items-center py-7 px-9">
+      <ng-content select="[header]"></ng-content>
+      <mat-icon
+        (click)="onCloseDrawer()"
+        class="cursor-pointer text-gray-600 hover:text-gray-800 transition-colors duration-300 p-2 rounded-full hover:bg-gray-200"
+        >clear</mat-icon
+      >
+    </div>
+    <mat-divider></mat-divider>
+  </header>
+
+  <!-- Main content -->
+  <main class="px-9 py-9 flex flex-col gap-9 main--content">
+    <ng-content select="[main]"></ng-content>
+  </main>
+
+  <!-- Footer  -->
+  <footer
+    class="w-full py-3 z-10 bg-white absolute bottom-0 left-0 right-0 px-9 flex flex-col gap-y-8 items-center">
+    <ng-content select="[footer]"></ng-content>
+  </footer>
+</div>

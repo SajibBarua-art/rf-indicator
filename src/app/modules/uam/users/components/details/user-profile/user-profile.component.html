@@ -1,0 +1,112 @@
+@if (data()) {
+  <div
+    class="grid grid-cols-1 w-full sm:grid-cols-2 mt-8 gap-1.5"
+    [ngClass]="{
+      'lg:grid-cols-4': !isQuickView(),
+    }"
+    *transloco="let t">
+    <app-profile-field-card
+      class="flex flex-grow"
+      [icon]="'heroicons_outline:user-circle'">
+      <div class="text-gray-800 font-bold" userCardTitle>
+        {{ data().FirstName }} {{ data().LastName }}
+      </div>
+      <div class="font-normal text-gray-500" userCardBody>
+        {{ data().Designation }}
+      </div>
+    </app-profile-field-card>
+    <app-profile-field-card class="flex flex-grow">
+      <div userCardTitle class="uppercase">{{ t('profile.Pin') }}</div>
+      <div userCardBody>
+        {{ data().PinNumber || data().UserName }}
+      </div>
+    </app-profile-field-card>
+    <app-profile-field-card class="flex flex-grow">
+      <div userCardTitle>{{ t('profile.DateOfBirth') }}</div>
+      <div userCardBody>
+        {{ data().DateOfBirth | date }}
+      </div>
+    </app-profile-field-card>
+    <app-profile-field-card class="flex flex-grow">
+      <div userCardTitle>{{ t('Program') }}</div>
+      <div userCardBody>
+        {{ data().DemarcationName }}
+      </div>
+    </app-profile-field-card>
+    <app-profile-field-card class="flex flex-grow">
+      <div userCardTitle>{{ t('Designation') }}</div>
+      <div userCardBody>
+        {{ data().Designation }}
+      </div>
+    </app-profile-field-card>
+    <app-profile-field-card>
+      <div userCardTitle>{{ t('profile.EmailID') }}</div>
+      <div
+        class="gap-2 grid grid-flow-col items-center truncate w-full"
+        userCardBody>
+        <div
+          class="grid-cols-4 truncate"
+          [matTooltip]="data().Email"
+          matTooltipPosition="above">
+          {{ data().Email }}
+        </div>
+        <!-- <div class="flex w-full">
+        <p class="truncate w-20">{{ data().Email }}</p>
+      </div> -->
+        <div class="grid-cols-2">
+          @if (data().Email) {
+            <app-copy-to-clipboard
+              [text]="data().Email"
+              iconClass="cursor-pointer w-2 h-2">
+            </app-copy-to-clipboard>
+          }
+        </div>
+      </div>
+    </app-profile-field-card>
+    <app-profile-field-card class="flex flex-grow">
+      <div userCardTitle>{{ t('profile.Gender') }}</div>
+      <div userCardBody>
+        {{ data().Sex }}
+      </div>
+    </app-profile-field-card>
+    <app-profile-field-card class="flex flex-grow">
+      <div userCardTitle>{{ t('profile.Grade') }}</div>
+      <div userCardBody>
+        {{ +data().JobLevel }}
+      </div>
+    </app-profile-field-card>
+    <app-profile-field-card class="flex flex-grow">
+      <div userCardTitle>{{ t('profile.JoiningDate') }}</div>
+      <div userCardBody>
+        {{ data().JoiningDate | date }}
+      </div>
+    </app-profile-field-card>
+    <app-profile-field-card class="flex flex-grow">
+      <div userCardTitle>{{ t('profile.EmploymentStatus') }}</div>
+      <div userCardBody>
+        @if (data().UserStatusId === 0) {
+          <div
+            class="rounded-sm text-[#039855] bg-[#ECFDF3] space-x-xxs px-[12px]">
+            {{ data().UserStatusText }}
+          </div>
+        }
+        @if (data().UserStatusId !== 0) {
+          <div
+            class="rounded-sm text-warn-600 bg-warn-50 space-x-xxs px-[12px]">
+            {{ data().UserStatusText }}
+          </div>
+        }
+      </div>
+    </app-profile-field-card>
+    <app-profile-field-card class="flex flex-grow">
+      <div userCardTitle>{{ t('profile.Roles') }}</div>
+      <div userCardBody>
+        <mat-chip-listbox>
+          @for (role of data().Roles; track role) {
+            <mat-chip>{{ role }}</mat-chip>
+          }
+        </mat-chip-listbox>
+      </div>
+    </app-profile-field-card>
+  </div>
+}

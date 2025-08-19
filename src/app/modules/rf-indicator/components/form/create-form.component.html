@@ -1,0 +1,140 @@
+<form
+  *transloco="let t"
+  class="px-8 pt-2 pb-0 flex flex-col gap-3"
+  [formGroup]="RfIndicatorform">
+  <!-- Type of Indicator -->
+  <mat-form-field class="w-full" floatLabel="always">
+    <mat-label>Type of Indicator</mat-label>
+    <mat-select
+      formControlName="IndicatorTypeId"
+      placeholder="Select indicator type">
+      <mat-option
+        *ngFor="let indicator of indicatorTypes"
+        [value]="indicator.Value">
+        {{ indicator.DisplayName }}
+      </mat-option>
+    </mat-select>
+    <mat-error
+      *ngIf="RfIndicatorform.get('IndicatorTypeId')?.hasError('required')">
+      This field is required.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Indicator No -->
+  <mat-form-field class="w-full" floatLabel="always">
+    <mat-label>Indicator No</mat-label>
+    <input
+      matInput
+      formControlName="IndicatorNumber"
+      type="number"
+      min="1"
+      max="99999"
+      placeholder="Enter indicator No"
+      class="text-black" />
+    <mat-error
+      *ngIf="RfIndicatorform.get('IndicatorNumber').hasError('required')">
+      This field is required.
+    </mat-error>
+    <mat-error>
+      <span *ngIf="RfIndicatorform.get('IndicatorNumber').hasError('max')">
+        Can't contains more than 5 digits.
+      </span>
+      <span *ngIf="RfIndicatorform.get('IndicatorNumber').hasError('min')">
+        Minimum value should be atleast 1.
+      </span>
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Indicator title -->
+  <mat-form-field class="w-full" floatLabel="always">
+    <mat-label>Indicator Title</mat-label>
+    <input
+      matInput
+      formControlName="Title"
+      type="text"
+      placeholder="Write indicator title"
+      class="text-black" />
+    <mat-error *ngIf="RfIndicatorform.get('Title').hasError('required')">
+      This field is required.
+    </mat-error>
+    <mat-error *ngIf="RfIndicatorform.get('Title').hasError('maxlength')">
+      This field cannot exceed more than 150 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Indicator Breakdown Layer -->
+  <mat-form-field class="w-full" floatLabel="always">
+    <mat-label>Indicator Breakdown Layer</mat-label>
+    <input
+      matInput
+      formControlName="BreakdownLayer"
+      type="number"
+      min="1"
+      max="999"
+      placeholder="Write indicator breakdown layer"
+      class="text-black" />
+    <mat-error
+      *ngIf="RfIndicatorform.get('BreakdownLayer').hasError('required')">
+      This field is required.
+    </mat-error>
+    <mat-error>
+      <span *ngIf="RfIndicatorform.get('BreakdownLayer').hasError('max')">
+        Can't contains more than 3 digits.
+      </span>
+      <span *ngIf="RfIndicatorform.get('BreakdownLayer').hasError('min')">
+        Minimum value should be atleast 1.
+      </span>
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Data Nature -->
+  <mat-label class="font-bold"> Data Nature </mat-label>
+  <p class="text-sm">Unit <span class="text-red-500">*</span></p>
+  <mat-radio-group
+    formControlName="DataNatureId"
+    class="flex flex-col gap-2"
+    color="primary">
+    <div class="flex flex-row gap-2">
+      <mat-radio-button
+        *ngFor="let nature of dataNatureOptions"
+        [value]="nature.value">
+        {{ nature.label }}
+      </mat-radio-button>
+    </div>
+    <mat-error
+      class="text-xs font-medium text-red-500"
+      *ngIf="
+        RfIndicatorform.get('DataNatureId').hasError('required') &&
+        RfIndicatorform.get('DataNatureId').touched
+      ">
+      This field is required.
+    </mat-error>
+  </mat-radio-group>
+
+  <!-- Data Collection Frequency -->
+  <p class="font-bold text-sm">Data Collection Frequency</p>
+
+  <mat-label class="text-sm font-normal"
+    >Select Frequency <span class="text-red-500">*</span></mat-label
+  >
+  <mat-radio-group
+    formControlName="DataCollectionFrequencyId"
+    class="flex flex-col gap-2"
+    color="primary">
+    <div class="flex flex-row">
+      <mat-radio-button
+        *ngFor="let frequency of dataFrequencies"
+        [value]="frequency.value">
+        {{ frequency.label }}
+      </mat-radio-button>
+    </div>
+    <mat-error
+      class="text-xs font-medium text-red-500"
+      *ngIf="
+        RfIndicatorform.get('DataCollectionFrequencyId').hasError('required') &&
+        RfIndicatorform.get('DataCollectionFrequencyId').touched
+      ">
+      This field is required.
+    </mat-error>
+  </mat-radio-group>
+</form>

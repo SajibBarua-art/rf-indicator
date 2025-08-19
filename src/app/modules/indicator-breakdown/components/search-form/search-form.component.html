@@ -1,0 +1,36 @@
+<form
+  [formGroup]="IndicatorSearchForm"
+  class="flex flex-row justify-between gap-[20px] w-full h-full">
+  <mat-form-field class="w-full" floatLabel="always">
+    <mat-label>Type of Indicator</mat-label>
+    <mat-select
+      formControlName="IndicatorType"
+      class="text-black"
+      placeholder="Select">
+      @for (item of IndicatorType(); track item.Key) {
+        <mat-option [value]="item.Key">{{ item.Label }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="w-full" floatLabel="always">
+    <mat-label>Frequency</mat-label>
+    <mat-select
+      formControlName="Frequency"
+      class="text-black"
+      placeholder="Select">
+      @for (item of Frequency(); track item.Key) {
+        <mat-option [value]="item.Key">{{ item.Label }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="w-full" floatLabel="always">
+    <mat-label>Indicator Title</mat-label>
+    <input
+      matInput
+      formControlName="Title"
+      type="text"
+      placeholder="Write indicator title"
+      class="text-black" />
+  </mat-form-field>
+</form>

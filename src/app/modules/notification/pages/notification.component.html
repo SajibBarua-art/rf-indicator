@@ -1,0 +1,36 @@
+<div class="container w-full flex flex-col">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-semibold">{{ 'Notifications' | transloco }}</h1>
+    <button
+      mat-icon-button
+      matTooltip="Refresh notifications"
+      (click)="refresh()"
+      [disabled]="loading()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+
+  <app-notifications
+    [isListMode]="true"
+    [isLoading]="loading()"></app-notifications>
+
+  <!-- Loading indicator -->
+  <div *ngIf="loading()" class="flex justify-center my-4">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <!-- End of list message -->
+  <div
+    *ngIf="!hasMoreNotifications() && !loading() && notifications().length > 0"
+    class="text-center my-4 text-gray-500">
+    {{ 'No more notifications to load' | transloco }}
+  </div>
+
+  <!-- Empty state -->
+  <div
+    *ngIf="!loading() && notifications().length === 0"
+    class="flex flex-col items-center justify-center my-8">
+    <mat-icon class="text-6xl text-gray-400">notifications_off</mat-icon>
+    <p class="mt-4 text-gray-500">{{ 'No notifications found' | transloco }}</p>
+  </div>
+</div>

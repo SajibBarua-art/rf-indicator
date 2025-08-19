@@ -1,0 +1,30 @@
+<div
+  class="platform-breadcrumbs flex flex-wrap items-center font-medium"
+  *transloco="let t">
+  <ng-container
+    *ngFor="
+      let breadcrumb of breadcrumbs;
+      let isFirst = first;
+      let isLast = last
+    ">
+    <a *ngIf="isFirst && breadcrumbs.length > 1" [routerLink]="breadcrumb.url">
+      <a class="whitespace-nowrap text-gray-700">{{ t(breadcrumb.label) }}</a>
+    </a>
+    <a
+      *ngIf="!isFirst && !isLast"
+      [routerLink]="breadcrumb.url"
+      class="flex items-center ml-1 whitespace-nowrap">
+      <mat-icon
+        class="icon-size-5 text-secondary"
+        [svgIcon]="'heroicons_mini:chevron-right'"></mat-icon>
+      <a class="ml-1 text-gray-700">{{ t(breadcrumb.label) }}</a>
+    </a>
+    <div *ngIf="isLast" class="flex items-center ml-1 whitespace-nowrap">
+      <mat-icon
+        *ngIf="breadcrumbs.length > 1"
+        class="icon-size-5 text-gray-400"
+        [svgIcon]="'heroicons_mini:chevron-right'"></mat-icon>
+      <span class="ml-1 text-secondary">{{ t(breadcrumb.label) }}</span>
+    </div>
+  </ng-container>
+</div>

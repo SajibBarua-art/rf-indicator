@@ -1,0 +1,106 @@
+<!-- Loading bar -->
+<fuse-loading-bar></fuse-loading-bar>
+
+<!-- Navigation -->
+<fuse-vertical-navigation
+  [mode]="isScreenSmall ? 'over' : 'side'"
+  [name]="'mainNavigation'"
+  [navigation]="navigation.default"
+  [opened]="!isScreenSmall"
+  class="shadow bg-card print:hidden lg:z-0 md:z-0">
+  <!-- Navigation header hook -->
+  <ng-container fuseVerticalNavigationHeader>
+    <div class="flex items-center justify-start w-full px-8 py-8 pl-6">
+      <!-- Logo -->
+      <img
+        routerLink="/"
+        class="w-1/2 cursor-pointer"
+        alt="logo"
+        src="../../../../../../assets/images/logo/logo-text.svg" />
+    </div>
+  </ng-container>
+  <!-- Navigation footer hook -->
+  <ng-container fuseVerticalNavigationFooter>
+    <a routerLink="release-note" class="p-4 mb-2 text-secondary"
+      >&#64; {{ currentYear }} BRACT IT | v{{ version }}</a
+    >
+  </ng-container>
+</fuse-vertical-navigation>
+
+<!-- Wrapper -->
+<div class="container flex flex-col flex-auto w-full min-w-0">
+  <!-- Header -->
+  <div
+    class="nav-header relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow bg-card print:hidden">
+    <!-- Desktop: Navigation toggle button -->
+    <div
+      class="hidden md:flex lg:mt-2 lg:left-0 md:mt-2 md:left-0"
+      [ngClass]="{
+        'lg:ml-[-45px]': !toggleNavigationValue,
+        'lg:ml-[-22px]': toggleNavigationValue,
+        'md:ml-[-45px]': !toggleNavigationValue,
+        'md:ml-[-22px]': toggleNavigationValue,
+      }">
+      <button mat-icon-button (click)="toggleNavigation('mainNavigation')">
+        <mat-icon
+          class="relative z-20 bg-white rounded-full border-solid"
+          [svgIcon]="'heroicons_outline:chevron-left'"
+          [color]="'primary'"
+          [class.rotate-180]="toggleNavigationValue"></mat-icon>
+      </button>
+    </div>
+
+    <!-- Mobile: Logo & toggle button -->
+    <div class="flex flex-grow justify-between md:hidden items-center">
+      <img
+        routerLink="/"
+        class="w-[72px] h-[24px]"
+        alt="logo"
+        src="../../../../../../assets/images/logo/logo-text.svg" />
+      <button mat-icon-button (click)="toggleNavigation('mainNavigation')">
+        <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
+      </button>
+    </div>
+    <!-- Components -->
+    <div
+      class="hidden md:flex flex-grow justify-between items-center pl-2 space-x-0.5 sm:space-x-2">
+      <!--<search [isGlobalSearch]="true" [appearance]="'basic'"></search>-->
+      <platform-breadcrumbs></platform-breadcrumbs>
+      <div class="flex justify-between items-center gap-x-1.5 ml-auto">
+        <!-- <languages></languages> -->
+        <!--<svg
+          class="mx-1.5"
+          xmlns="http://www.w3.org/2000/svg"
+          width="2"
+          height="32"
+          viewBox="0 0 2 32"
+          fill="none">
+          <path d="M1 0V32" stroke="#C8C8CA" />
+        </svg>
+        <notifications></notifications>-->
+        <svg
+          class="mx-1.5"
+          xmlns="http://www.w3.org/2000/svg"
+          width="2"
+          height="32"
+          viewBox="0 0 2 32"
+          fill="none">
+          <path d="M1 0V32" stroke="#C8C8CA" />
+        </svg>
+        <user [showAvatar]="false"></user>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content flex flex-col flex-auto bg-gray-100">
+    <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+             Otherwise, layout changes won't be registered and the view won't be updated! -->
+    <router-outlet *ngIf="true"></router-outlet>
+  </div>
+
+  <!-- Footer -->
+  <!--<div class="footer relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+        <span class="font-medium text-secondary">Fuse &copy; {{currentYear}}</span>
+    </div>-->
+</div>

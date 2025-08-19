@@ -1,0 +1,24 @@
+<div class="details-header flex justify-between items-center mb-4">
+  <div class="flex justify-start items-center gap-2">
+    <!-- <a
+      mat-button
+      class="cursor-pointer"
+      [color]="'primary'"
+      (click)="backClicked.emit()">
+      <mat-icon [svgIcon]="'heroicons_outline:arrow-long-left'"></mat-icon>
+    </a> -->
+    <!-- <mat-divider class="w-[1px] h-[20px] bg-gray-200"></mat-divider> -->
+
+    <!-- Menu -->
+    <fuse-horizontal-navigation
+      class="mr-2"
+      [name]="'detailsNavigation'"
+      [navigation]="navigations">
+    </fuse-horizontal-navigation>
+  </div>
+
+  <div class="flex gap-2">
+    <ng-content select="details-header-actions"></ng-content>
+  </div>
+</div>
+<mat-divider></mat-divider>

@@ -1,0 +1,28 @@
+<div class="w-full" *transloco="let t">
+  <platform-advance-datatable-with-filter
+    [dataTableOptions]="datatableConfig()"
+    (onSelectData)="selectData($event)">
+    <div class="flex" platformTableHeader>
+      <ng-content></ng-content>
+    </div>
+    @if (!data()?.InstantSelect) {
+      <platform-button
+        platformTableAction
+        variant="primary"
+        iconPrefix="platform_solid:create"
+        (onClick)="confirmUserAdd()">
+        {{ t('Add Recipient') }}
+      </platform-button>
+    }
+  </platform-advance-datatable-with-filter>
+</div>
+
+<ng-template #programCell let-row="row" ngx-datatable-cell-template>
+  <div
+    class="flex justify-center items-center w-full gap-[9px] h-8 rounded-[5px] bg-blue-50 text-blue-500 px-[20px] py-[15px]"
+    [matTooltip]="row.programName">
+    <span class="font-bold truncate">
+      {{ row.programName || 'N/A' }}
+    </span>
+  </div>
+</ng-template>

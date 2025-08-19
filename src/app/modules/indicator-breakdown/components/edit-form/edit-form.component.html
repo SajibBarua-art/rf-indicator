@@ -1,0 +1,189 @@
+<main class="flex flex-col gap-9">
+  <form [formGroup]="IndicatorEditForm">
+    <!-- Operation Indicator -->
+
+    <mat-form-field class="w-full" floatLabel="always">
+      <mat-label>Operation Category</mat-label>
+      <mat-select
+        formControlName="OperationCategory"
+        placeholder="Select Operation Category">
+        <mat-option
+          *ngFor="let category of OperationCategories"
+          [value]="category.value">
+          {{ category.label }}
+        </mat-option>
+      </mat-select>
+
+      <mat-error
+        *ngIf="
+          IndicatorEditForm.get('OperationCategory')?.hasError('required')
+        ">
+        This field is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Indicator Structure -->
+    <div class="flex flex-col p-9 gap-5 rounded-lg border border-gray-200">
+      <p class="font-bold">Indicator Structure</p>
+
+      <!-- Institute Type -->
+      <mat-form-field class="w-full" floatLabel="always">
+        <mat-label>Institute Type</mat-label>
+        <mat-select
+          formControlName="InstituteType"
+          placeholder="Select Institute Type">
+          <mat-option *ngFor="let type of InstituteTypes" [value]="type.value">
+            {{ type.label }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="IndicatorEditForm.get('InstituteType')?.hasError('required')">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Layer Breakdown -->
+      <p class="font-bold">Layer Breakdown</p>
+      <app-breakdown-form [breakdownform]="breakdownform"></app-breakdown-form>
+
+      <!-- Location Configuration -->
+      <p class="font-bold">Location Configuration</p>
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+          <mat-checkbox
+            formControlName="Division"
+            color="primary"
+            (change)="OnDivisionSelect($event.checked)"
+            >Division</mat-checkbox
+          >
+          <mat-form-field class="w-full">
+            <mat-select
+              formControlName="DivisionList"
+              placeholder="Select Division"
+              multiple
+              (selectionChange)="onDivisionListChange()">
+              <mat-option
+                *ngFor="let division of DivisionList"
+                [value]="division.Value">
+                {{ division.Label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- District Field -->
+        <div class="flex items-center gap-4">
+          <mat-checkbox
+            formControlName="District"
+            color="primary"
+            (change)="OnDistrictSelect($event.checked)"
+            >District</mat-checkbox
+          >
+          <!-- (selectionChange)="onDistrictListChange()" -->
+          <mat-form-field class="w-full">
+            <mat-select
+              formControlName="DistrictList"
+              placeholder="Select District"
+              multiple
+              (selectionChange)="onDistrictListChange()">
+              <mat-option
+                *ngFor="let district of DistrictList"
+                [value]="district.Value">
+                {{ district.Label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- (change)="OnUpazilaSelect($event.checked)" -->
+        <!-- Upazila Field -->
+        <div class="flex items-center gap-4">
+          <mat-checkbox
+            formControlName="Upazila"
+            color="primary"
+            (change)="OnUpazilaSelect($event.checked)"
+            >Upazila</mat-checkbox
+          >
+          <mat-form-field class="w-full">
+            <mat-select
+              formControlName="UpazilaList"
+              placeholder="Select Upazila"
+              multiple>
+              <mat-option
+                *ngFor="let upazila of UpazilaList"
+                [value]="upazila.Value">
+                {{ upazila.Label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- User Role Permission -->
+      <p class="font-bold">User Role Permission</p>
+      <div class="grid grid-cols-2 gap-5">
+        <!-- Primary data Point -->
+        <mat-form-field class="w-full" floatLabel="always">
+          <mat-label>Primary Data Point (Maker)</mat-label>
+          <mat-select
+            formControlName="UserRoleMaker"
+            placeholder="Select user role">
+            <mat-option
+              *ngFor="let userRole1 of UserRoleMaker"
+              [value]="userRole1.value">
+              {{ userRole1.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              IndicatorEditForm.get('UserRoleMaker')?.hasError('required')
+            ">
+            This field is required.
+          </mat-error>
+        </mat-form-field>
+        <!-- Secondary Data Point -->
+        <mat-form-field class="w-full" floatLabel="always">
+          <mat-label>Secondary Data Point (Checker)</mat-label>
+          <mat-select
+            formControlName="UserRoleChecker"
+            placeholder="Select user role">
+            <mat-option
+              *ngFor="let userRole2 of UserRoleChecker"
+              [value]="userRole2.value">
+              {{ userRole2.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!--Validator Field  -->
+        <mat-form-field class="w-full" floatLabel="always">
+          <mat-label>Validator (Field)</mat-label>
+          <mat-select
+            formControlName="ValidatorField"
+            placeholder="Select user role">
+            <mat-option
+              *ngFor="let userRole3 of ValidatorField"
+              [value]="userRole3.value">
+              {{ userRole3.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- Validator HO -->
+        <mat-form-field class="w-full" floatLabel="always">
+          <mat-label>Validator (HO)</mat-label>
+          <mat-select
+            formControlName="ValidatorHo"
+            placeholder="Select user role">
+            <mat-option
+              *ngFor="let userRole4 of ValidatorHo"
+              [value]="userRole4.value">
+              {{ userRole4.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="IndicatorEditForm.get('ValidatorHo')?.hasError('required')">
+            This field is required.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</main>

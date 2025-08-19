@@ -1,0 +1,86 @@
+<!-- Loading bar -->
+<fuse-loading-bar></fuse-loading-bar>
+
+<!-- Navigation -->
+<fuse-vertical-navigation
+  class="shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden"
+  [appearance]="navigationAppearance"
+  [mode]="isScreenSmall ? 'over' : 'side'"
+  [name]="'mainNavigation'"
+  [navigation]="navigation.default"
+  [opened]="!isScreenSmall">
+  <!-- Navigation header hook -->
+  <ng-container fuseVerticalNavigationContentHeader>
+    <div class="flex items-center justify-center w-full p-4 pl-6">
+      <!-- Logo -->
+      <img
+        class="w-1/2"
+        src="../../../../../../assets/images/logo/logo-text.svg" />
+    </div>
+  </ng-container>
+  <!-- Navigation footer hook -->
+  <ng-container fuseVerticalNavigationContentFooter>
+    <!-- Footer Data here  -->
+  </ng-container>
+</fuse-vertical-navigation>
+
+<!-- Wrapper -->
+<div class="flex flex-col flex-auto w-full min-w-0">
+  <!-- Header -->
+  <div
+    class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+    <div class="flex items-center pr-2 space-x-2">
+      <!-- Navigation appearance toggle button -->
+      <button
+        class="hidden md:inline-flex"
+        mat-icon-button
+        (click)="toggleNavigationAppearance()">
+        <mat-icon [svgIcon]="'heroicons_outline:arrows-right-left'"></mat-icon>
+      </button>
+    </div>
+    <!-- Components -->
+    <div
+      class="hidden md:flex flex-grow justify-between items-center pl-2 space-x-0.5 sm:space-x-2">
+      <!--<search [isGlobalSearch]="true" [appearance]="'basic'"></search>-->
+      <platform-breadcrumbs></platform-breadcrumbs>
+      <div class="flex justify-between items-center gap-x-1.5 ml-auto">
+        <languages></languages>
+        <svg
+          class="mx-1.5"
+          xmlns="http://www.w3.org/2000/svg"
+          width="2"
+          height="32"
+          viewBox="0 0 2 32"
+          fill="none">
+          <path d="M1 0V32" stroke="#C8C8CA" />
+        </svg>
+        <notifications></notifications>
+        <svg
+          class="mx-1.5"
+          xmlns="http://www.w3.org/2000/svg"
+          width="2"
+          height="32"
+          viewBox="0 0 2 32"
+          fill="none">
+          <path d="M1 0V32" stroke="#C8C8CA" />
+        </svg>
+        <user [showAvatar]="false"></user>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="flex flex-col flex-auto">
+    <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+             Otherwise, layout changes won't be registered and the view won't be updated! -->
+    <router-outlet *ngIf="true"></router-outlet>
+  </div>
+
+  <!-- Footer -->
+  <div
+    class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+    <span class="font-medium text-secondary"
+      >Fuse &copy; {{ currentYear }}</span
+    >
+  </div>
+</div>

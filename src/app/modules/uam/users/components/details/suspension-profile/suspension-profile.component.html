@@ -1,0 +1,80 @@
+<header class="bg-gray-100 px-9 py-7 flex justify-between" *transloco="let t">
+  <div class="text-secondary-500 text-2xl font-bold">
+    @if (data.UserStatusId === 0) {
+      <p>{{ t('suspension.ConfirmSuspension') }}</p>
+    }
+    @if (data.UserStatusId === 1) {
+      <p>{{ t('suspension.ConfirmUnsuspension') }}</p>
+    }
+  </div>
+  <mat-icon
+    class="icon-size-6 cursor-pointer"
+    svgIcon="platform_solid:cancel_user"
+    (click)="closeDialog()"></mat-icon>
+</header>
+
+<form [formGroup]="userForm" class="px-9 pt-9 w-full" *transloco="let t">
+  <div class="mb-8 text-secondary">
+    {{ t('suspension.Are you sure you want to') }}
+    {{ data.UserStatusId === 0 ? t('Suspend') : t('Unsuspend') }}
+    {{ t('suspension.this user?') }}
+  </div>
+  @if (data.UserStatusId === 0 && combinedData.length === 0) {
+    <div class="w-full">
+      <mat-form-field appearance="fill" class="w-full mb-8" floatLabel="always">
+        <mat-label>{{ t('suspension.Reason') }}</mat-label>
+        <textarea
+          matInput
+          formControlName="Remark"
+          class="w-full h-40 resize-y"
+          placeholder="{{ t('suspension.Enter a reason') }}..."
+          required></textarea>
+        @if (
+          userForm.get('Remark')?.invalid && userForm.get('Remark')?.touched
+        ) {
+          <mat-error> {{ t('form.required') }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  }
+  @if (data.UserStatusId === 0 && combinedData.length > 0) {
+    <section>
+      <div class="bg-red-100 rounded-lg">
+        <p class="text-red-600 px-9 py-5">
+          {{ t('suspension.approver-before') }}
+        </p>
+      </div>
+      <div class="my-8 text-gray-600 overflow-y-auto h-18">
+        @for (item of combinedData; track item) {
+          <div>
+            <!-- &#8226;<b class="pl-5">{{ item.ApprovalFlowName }}:</b>
+            {{ item.StepName }} -->
+          </div>
+        }
+        <!-- <div>&#8226;<b class="pl-5">Microfinance Workflow:</b> Approver 2</div>
+        <div>&#8226;<b class="pl-5">Ekota Workflow:</b> Approver 1</div> -->
+        @for (item of combinedData; track item) {
+          <div>
+            &#8226;<b class="pl-5">{{ item.ApprovalFlowName }}:</b>
+            {{ item.StepName }}
+          </div>
+        }
+      </div>
+    </section>
+  }
+</form>
+<mat-divider></mat-divider>
+@if (combinedData.length === 0) {
+  <div class="flex justify-end gap-4 p-9" *transloco="let t">
+    <platform-button variant="default" (onClick)="closeDialog()">{{
+      t('Cancel')
+    }}</platform-button>
+    <platform-button
+      type="submit"
+      [disabled]="isSaving"
+      [isLoading]="isSaving"
+      (onClick)="submitForm()"
+      >{{ t('Confirm') }}</platform-button
+    >
+  </div>
+}

@@ -1,0 +1,36 @@
+@if (isTableVisible) {
+  <div *transloco="let t" class="w-full">
+    <!--  -->
+    <div>
+      <platform-advance-datatable-with-filter
+        [filterMode]="'inline'"
+        (onSidebarAction)="sideBarAction($event)"
+        [dataTableOptions]="datatableConfig()"
+        [changeTableCurrentPage]="initialPage$"
+        (listCurrentPage)="currentPageNumber = $event + 1">
+        <div
+          platformTableHeader
+          class="w-full text-2xl font-bold flex flex-col gap-7">
+          <div>
+            {{ t('indicator-breakdown.ListTableHeader') }}
+          </div>
+        </div>
+
+        <platform-button
+          platformTableAction
+          variant="default"
+          buttonClass="text-gray-600"
+          iconPrefix="platform_solid:reload"
+          (onClick)="refreshTable()">
+          Refresh
+        </platform-button>
+        <!-- <platform-button
+        platformTableAction
+        iconPrefix="platform_solid:filter2"
+        (onClick)="search()">
+        Search
+      </platform-button> -->
+      </platform-advance-datatable-with-filter>
+    </div>
+  </div>
+}

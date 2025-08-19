@@ -1,0 +1,183 @@
+<div class="w-full mb-[90px]" *transloco="let t">
+  <div class="w-full">
+    <div class="flex flex-col my-4 gap-6">
+      <app-card class="w-full">
+        <form
+          [formGroup]="roleForm"
+          (ngSubmit)="submitForm()"
+          class="relative flex gap-[25px] p-6 w-full">
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-9">
+            <mat-form-field
+              id="role-id"
+              class="w-full h-[28px]"
+              floatLabel="always">
+              <mat-label>{{ t('RoleCreate.RoleID') }}</mat-label>
+              <input
+                matInput
+                id="RoleUniqName"
+                formControlName="RoleUniqName"
+                maxlength="100"
+                appRestrictInput
+                placeholder="{{ t('RoleCreate.RoleID') }}" />
+              @if (
+                roleForm?.controls?.RoleUniqName?.errors ||
+                roleForm?.controls?.RoleUniqName?.touched
+              ) {
+                <mat-error>
+                  @if (roleForm.get('RoleUniqName').hasError('required')) {
+                    <span>{{ t('form.required') }} </span>
+                  }
+                  @if (roleForm?.get('RoleUniqName')?.hasError('maxlength')) {
+                    <span>Role ID cannot exceed 100 characters. </span>
+                  }
+                  @if (
+                    roleForm
+                      ?.get('RoleUniqName')
+                      ?.hasError('invalidCharacter') &&
+                    !roleForm.get('RoleUniqName').hasError('required')
+                  ) {
+                    <span
+                      >Role ID cannot contain special characters like
+                      space,numbers and only underscore.
+                    </span>
+                  }
+                  @if (roleForm.get('RoleUniqName').hasError('pattern')) {
+                    <span> Only letters and underscores are allowed.</span>
+                  }
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field class="w-full h-[28px]" floatLabel="always">
+              <mat-label>{{ t('RoleCreate.RoleName') }}</mat-label>
+              <input
+                matInput
+                id="RoleDisplayName"
+                formControlName="RoleDisplayName"
+                placeholder="{{ t('RoleCreate.RoleName') }}" />
+              @if (
+                roleForm.controls.RoleDisplayName.errors ||
+                roleForm.controls.RoleDisplayName.touched
+              ) {
+                <mat-error>
+                  @if (roleForm.get('RoleDisplayName').hasError('required')) {
+                    <span> {{ t('form.required') }} </span>
+                  }
+                  @if (
+                    roleForm?.get('RoleDisplayName')?.hasError('maxlength')
+                  ) {
+                    <span> Role name cannot exceed 100 characters</span>
+                  }
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field class="w-full" floatLabel="always">
+              <mat-label>{{ t('RoleCreate.Description') }}</mat-label>
+              <textarea
+                matInput
+                id="Description"
+                formControlName="Description"
+                maxlength="500"
+                placeholder="{{ t('RoleCreate.Description') }}..."></textarea>
+              @if (
+                roleForm.controls.Description.errors &&
+                roleForm.controls.Description.touched
+              ) {
+                <mat-error>
+                  @if (roleForm.controls.Description.errors['maxlength']) {
+                    <span>Description cannot exceed 500 characters</span>
+                  }
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div
+            *transloco="let t"
+            class="fixed bottom-0 left-0 right-0 bg-white flex justify-end gap-8 w-full border-t-[0px] border-gray-200 px-13 py-7 z-50">
+            <platform-button variant="default" (click)="cancelCreateRole()">
+              {{ t('Cancel') }}
+            </platform-button>
+            <platform-button
+              type="submit"
+              [disabled]="waiting || (role?.Id && !roleForm.dirty)"
+              [isLoading]="waiting">
+              {{
+                t(isUpdateMode ? t('RoleCreate.Save') : t('RoleCreate.Create'))
+              }}
+            </platform-button>
+          </div>
+        </form>
+      </app-card>
+      <app-card class="flex-grow">
+        <div class="flex flex-col p-10">
+          <div class="flex justify-between">
+            <div
+              class="relative left-3"
+              [ngClass]="{
+                'text-warn':
+                  roleForm.controls.FeatureIds.errors &&
+                  roleForm.controls.FeatureIds.touched,
+              }">
+              <mat-label
+                class="text-gray-800"
+                [ngClass]="{
+                  'text-warn':
+                    roleForm.controls.FeatureIds.errors &&
+                    roleForm.controls.FeatureIds.touched,
+                }"
+                >{{ t('RoleCreate.SelectRolePermission') }}</mat-label
+              >
+              <span
+                aria-hidden="true"
+                class="mat-mdc-form-field-required-marker mdc-floating-label--required"></span>
+            </div>
+            <div class="relative ml-auto"></div>
+          </div>
+
+          <div
+            class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-10 mt-4">
+            @for (
+              keyFeature of Object.keys(groupedFeatures);
+              track keyFeature
+            ) {
+              @if (hasVisibleFeatures(keyFeature)) {
+                <mat-accordion>
+                  <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header class="bg-gray-100">
+                      <mat-checkbox
+                        [(ngModel)]="selectAllStates[keyFeature]"
+                        color="primary"
+                        (change)="toggleAllFeatures(keyFeature, $event.checked)"
+                        (click)="$event.stopPropagation()">
+                        {{ keyFeature }}
+                      </mat-checkbox>
+                    </mat-expansion-panel-header>
+                    <div
+                      class="flex flex-col space-y-2 sm:space-y-3 md:space-y-4">
+                      @for (
+                        feature of groupedFeatures[keyFeature];
+                        track feature
+                      ) {
+                        @if (feature.isShow) {
+                          <mat-checkbox
+                            [(ngModel)]="feature.checked"
+                            (change)="checkRootSelection(keyFeature)"
+                            color="primary">
+                            {{ feature.Name }}
+                          </mat-checkbox>
+                        }
+                      }
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+                <!-- <mat-divider [vertical]="true" class="hidden md:block"></mat-divider> -->
+              }
+            }
+          </div>
+        </div>
+      </app-card>
+    </div>
+  </div>
+</div>

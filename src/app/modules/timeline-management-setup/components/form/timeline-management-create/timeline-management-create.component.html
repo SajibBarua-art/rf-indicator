@@ -1,0 +1,236 @@
+<main class="flex flex-col gap-9">
+  <form [formGroup]="TargetManagementFrom">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <mat-form-field class="w-full" floatLabel="always">
+        <mat-label>Operation Category</mat-label>
+        <mat-select
+          formControlName="OperationCategoryId"
+          placeholder="Select Operation Category">
+          <mat-option
+            *ngFor="let category of OperationCategories"
+            [value]="category.value">
+            {{ category.label }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error
+          *ngIf="
+            TargetManagementFrom.get('OperationCategoryId')?.hasError(
+              'required'
+            )
+          ">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-full" floatLabel="always">
+        <mat-label>Institute Type</mat-label>
+        <mat-select
+          formControlName="InstituteTypeId"
+          placeholder="Select Institute Type">
+          <mat-option *ngFor="let type of InstituteTypes" [value]="type.value">
+            {{ type.label }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            TargetManagementFrom.get('InstituteTypeId')?.hasError('required')
+          ">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+      <div class="flex flex-col w-full">
+        <label class="text-xs font-semibold mb-1">{{
+          'Region/Division'
+        }}</label>
+        <ng-select
+          [items]="DivisionList"
+          bindLabel="Label"
+          placeholder="Select"
+          formControlName="DivisionList"
+          [closeOnSelect]="false"
+          [searchable]="true"
+          [clearable]="false"
+          [hideSelected]="false">
+          >
+        </ng-select>
+      </div>
+      <div class="flex flex-col w-full">
+        <label class="text-xs font-semibold mb-1">{{ 'Area/District' }} </label>
+        <ng-select
+          [items]="DistrictList"
+          [closeOnSelect]="false"
+          [searchable]="true"
+          placeholder="Select"
+          formControlName="DistrictList"
+          class="w-full mt-2 text-[14px]"
+          [clearable]="false"
+          [hideSelected]="false"
+          bindLabel="Label">
+        </ng-select>
+      </div>
+      <div class="flex flex-col w-full">
+        <label class="text-xs font-semibold mb-1">{{
+          'Branch/Upazilla'
+        }}</label>
+        <ng-select
+          [items]="UpazilaList"
+          [closeOnSelect]="false"
+          [searchable]="true"
+          placeholder="Select"
+          formControlName="UpazilaList"
+          class="w-full mt-2 text-[14px]"
+          [clearable]="false"
+          [hideSelected]="false"
+          bindLabel="Label">
+        </ng-select>
+      </div>
+      <div class="flex flex-col w-full">
+        <label class="text-xs font-semibold mb-1">{{ 'Institute' }} </label>
+        <ng-select
+          [items]="InstituteList"
+          [closeOnSelect]="false"
+          [searchable]="true"
+          placeholder="Select"
+          formControlName="InstituteList"
+          class="w-full mt-2 text-[14px]"
+          [clearable]="false"
+          [hideSelected]="false"
+          bindLabel="Label"
+          bindValue="Value">
+        </ng-select>
+      </div>
+
+      <mat-form-field>
+        <mat-label>Start date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="startPicker"
+          formControlName="StartDate" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+        <mat-error
+          *ngIf="TargetManagementFrom.get('StartDate')?.hasError('required')">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>End date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="endPicker"
+          formControlName="EndDate"
+          [min]="minEndDate" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+        <mat-error
+          *ngIf="TargetManagementFrom.get('EndDate')?.hasError('required')">
+          This field is required.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            TargetManagementFrom.hasError('dateRangeInvalid') &&
+            TargetManagementFrom.get('EndDate')?.touched
+          ">
+          End date cannot be earlier than start date.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-full" floatLabel="always">
+        <mat-label>{{ 'Data Collection Frequency' }}</mat-label>
+        <mat-select
+          formControlName="DataCollectionFrequencyId"
+          placeholder="Select Operation Category">
+          <mat-option
+            *ngFor="let data of DATA_FREQUENCIES"
+            [value]="data.value">
+            {{ data.label }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error
+          *ngIf="
+            TargetManagementFrom.get('DataCollectionFrequencyId')?.hasError(
+              'required'
+            )
+          ">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-full" floatLabel="always">
+        <mat-label>{{ 'Reporting Frequency' }}</mat-label>
+        <mat-select
+          formControlName="ReportingFrequencyId"
+          placeholder="Select Operation Category">
+          <mat-option
+            *ngFor="let data of REPORTING_FREQUENCIES"
+            [value]="data.value">
+            {{ data.label }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error
+          *ngIf="
+            TargetManagementFrom.get('ReportingFrequencyId')?.hasError(
+              'required'
+            )
+          ">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>{{ 'Data collection deadline' }}</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="DataCollectionDeadlineInDays" />
+      <mat-error
+        *ngIf="
+          TargetManagementFrom.get('DataCollectionDeadlineInDays')?.hasError(
+            'required'
+          )
+        ">
+        This field is required.
+      </mat-error>
+      <mat-error
+        *ngIf="
+          TargetManagementFrom.get('DataCollectionDeadlineInDays')?.hasError(
+            'min'
+          )
+        ">
+        Minimum allowed value is 1.
+      </mat-error>
+
+      <mat-error
+        *ngIf="
+          TargetManagementFrom.get('DataCollectionDeadlineInDays')?.hasError(
+            'max'
+          )
+        ">
+        Maximum allowed value is 31.
+      </mat-error>
+      <mat-error
+        *ngIf="
+          TargetManagementFrom.get('DataCollectionDeadlineInDays')?.hasError(
+            'negativeNotAllowed'
+          )
+        ">
+        Value cannot be negative.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>{{ 'Reason/Comments' }}</mat-label>
+      <textarea matInput rows="3" formControlName="Reason"></textarea>
+
+      <mat-error
+        *ngIf="TargetManagementFrom.get('Reason')?.hasError('maxlength')">
+        Reason cannot exceed 120 characters.
+      </mat-error>
+    </mat-form-field>
+  </form>
+</main>

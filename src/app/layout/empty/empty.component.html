@@ -1,0 +1,35 @@
+<!-- Loading bar -->
+<fuse-loading-bar></fuse-loading-bar>
+
+<!-- Wrapper -->
+<div class="flex flex-col flex-auto w-full">
+  <!-- Header -->
+  <div
+    class="nav-header relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+    <!-- Components -->
+    <div
+      class="w-full ml-auto flex flex-grow justify-between items-center pl-2 space-x-0.5 sm:space-x-2">
+      <div class="flex justify-between items-center gap-x-1.5 ml-auto">
+        <languages></languages>
+        <!-- <svg
+          class="mx-1.5"
+          xmlns="http://www.w3.org/2000/svg"
+          width="2"
+          height="32"
+          viewBox="0 0 2 32"
+          fill="none">
+          <path d="M1 0V32" stroke="#C8C8CA" />
+        </svg> -->
+        <!-- <notifications></notifications> -->
+      </div>
+      <div class="flex justify-between items-center gap-x-1.5 ml-auto">
+        <user [showAvatar]="false"></user>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="flex flex-col flex-auto">
+    <router-outlet *ngIf="true"></router-outlet>
+  </div>
+</div>
